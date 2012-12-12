@@ -1,4 +1,4 @@
-# 0.0.3 WIP
+# 0.0.3
 
 * Renames project to ``sdk-app`` to stay compliant with other QS naming
 
