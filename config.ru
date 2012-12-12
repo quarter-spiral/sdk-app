@@ -1,3 +1,3 @@
 Bundler.require
 
-run SdkApp::App.new
+run Sdk::App::App.new

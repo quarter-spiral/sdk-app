@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'sdk_app/version'
+require 'sdk-app/version'
 
 Gem::Specification.new do |gem|
-  gem.name          = "sdk_app"
-  gem.version       = SdkApp::VERSION
+  gem.name          = "sdk-app"
+  gem.version       = Sdk::App::VERSION
   gem.authors       = ["Thorben Schröder"]
   gem.email         = ["stillepost@gmail.com"]
   gem.description   = %q{This SDK is the interface between your game and the Quarter Spiral platform}

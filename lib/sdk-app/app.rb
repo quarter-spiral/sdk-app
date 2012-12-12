@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'sinatra/assetpack'
 
-module SdkApp
+module Sdk::App
   class App < Sinatra::Base
     set :root, File.expand_path('../../../assets', __FILE__)
     register Sinatra::AssetPack
