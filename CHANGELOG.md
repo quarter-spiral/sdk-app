@@ -1,3 +1,7 @@
+# 0.0.5 WIP
+
+* Fixes bug in the HTML5 SDK
+
 # 0.0.4
 
 * Makes the SDK flash ready

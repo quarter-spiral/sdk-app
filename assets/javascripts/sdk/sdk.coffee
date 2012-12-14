@@ -53,9 +53,9 @@ class QS
       if flashMovie and flashMovie.qsSetupCallback
         window.QS.flash = qs
         flashMovie.qsSetupCallback(qs)
+        return
       else
         deferred.resolve(qs)
-      return
 
     receiveMessage = (event) ->
       return if event.origin isnt qs.options.canvasAppUrl
