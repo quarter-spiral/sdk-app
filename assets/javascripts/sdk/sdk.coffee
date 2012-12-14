@@ -32,6 +32,11 @@ extractData = (data) ->
     extractedData[key] = extractValue(value)
   extractedData
 
+
+flashMovie = null;
+onDomReady ->
+  flashMovie = document.getElementById('qs-embedded-flash-game')
+
 class QS
   @defaultOptions: {
     canvasAppUrl: 'http://qs-canvas-app.herokuapp.com'
@@ -43,6 +48,15 @@ class QS
     qs.options = aug(@defaultOptions, options)
     deferred = Q.defer()
 
+    if window.qs
+      qs.data = window.qs
+      if flashMovie and flashMovie.qsSetupCallback
+        window.QS.flash = qs
+        flashMovie.qsSetupCallback(qs)
+      else
+        deferred.resolve(qs)
+      return
+
     receiveMessage = (event) ->
       return if event.origin isnt qs.options.canvasAppUrl
 
@@ -52,7 +66,11 @@ class QS
         when 'qs-data'
           event.source.postMessage(JSON.stringify(type: 'qs-info-received'), event.origin);
           qs.data = data.data
-          deferred.resolve(qs)
+          if flashMovie and flashMovie.qsSetupCallback
+            window.qsFlashData = qs
+            flashMovie.qsSetupCallback(qs)
+          else
+            deferred.resolve(qs)
 
     window.addEventListener "message", receiveMessage, false
     deferred.promise
@@ -67,9 +85,16 @@ class QS
           Authorization: "Bearer #{@data.tokens.qs}"
         }
     ).then((player) ->
-      deferred.resolve(player)
+      if flashMovie && flashMovie.qsPlayerInfoCallback
+        flashMovie.qsPlayerInfoCallback(player)
+      else
+        deferred.resolve(player)
     , (err, msg) ->
-      deferred.reject(err)
+      if flashMovie && flashMovie.qsPlayerInfoErrorCallback
+        flashMovie.qsPlayerInfoErrorCallback(msg)
+      else
+        deferred.reject(err)
+
     )
     deferred.promise
 
@@ -84,9 +109,16 @@ class QS
         }
     ).then((playerData) ->
       data = extractData(playerData.meta)
-      deferred.resolve(data)
+      if flashMovie && flashMovie.qsPlayerDataCallback
+        flashMovie.qsPlayerDataCallback(data)
+      else
+        deferred.resolve(data)
     , (err, msg) ->
-      deferred.reject(err)
+      if flashMovie && flashMovie.qsPlayerDataErrorCallback
+        flashMovie.qsPlayerDataErrorCallback(msg)
+      else
+        deferred.reject(err)
+
     )
     deferred.promise
 
@@ -118,9 +150,15 @@ class QS
           Authorization: "Bearer #{@data.tokens.qs}"
         }
     ).then((playerData) ->
-      deferred.resolve(playerData.meta)
+      if flashMovie && flashMovie.qsPlayerDataSetCallback
+        flashMovie.qsPlayerDataSetCallback(playerData)
+      else
+        deferred.resolve(playerData.meta)
     , (err, msg) ->
-      deferred.reject(err)
+      if flashMovie && flashMovie.qsPlayerDataSetErrorCallback
+        flashMovie.qsPlayerDataSetErrorCallback(msg)
+      else
+        deferred.reject(err)
     )
     deferred.promise
 

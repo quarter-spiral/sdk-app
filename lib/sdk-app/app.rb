@@ -11,9 +11,9 @@ module Sdk::App
 
       # The second parameter defines where the compressed version will be served.
       # (Note: that parameter is optional, AssetPack will figure it out.)
-      js :sd, '/javascripts/sdk.js', [
+      js :sdk, '/javascripts/sdk.js', [
         '/javascripts/vendor/*.js',
-        '/javascripts/sdk/*.js'
+        '/javascripts/sdk/sdk.js'
       ]
 
       js_compression  :yui      # Optional
