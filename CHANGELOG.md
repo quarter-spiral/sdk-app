@@ -1,4 +1,4 @@
-# 0.0.5 WIP
+# 0.0.5
 
 * Fixes bug in the HTML5 SDK
 
