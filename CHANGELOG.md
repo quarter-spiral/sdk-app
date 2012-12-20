@@ -1,3 +1,7 @@
+# 0.0.6 WIP
+
+* Adds Newrelic monitoring and ping middleware
+
 # 0.0.5
 
 * Fixes bug in the HTML5 SDK

@@ -22,4 +22,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'coffee-script', '~> 2.2.0'
   gem.add_dependency 'yui-compressor', '~> 0.9.6'
   gem.add_dependency 'therubyracer', '~> 0.10.0'
+  gem.add_dependency 'newrelic_rpm', '~> 3.5.4.33'
+  gem.add_dependency 'ping-middleware', '~> 0.0.2'
 end
