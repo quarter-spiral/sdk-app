@@ -1,4 +1,4 @@
-# 0.0.7 WIP
+# 0.0.7
 
 * Makes the SDK work by default with local development setups
 
