@@ -39,7 +39,7 @@ onDomReady ->
 
 class QS
   @defaultOptions: {
-    canvasAppUrl: 'http://qs-canvas-app.herokuapp.com'
+    canvasAppUrl: ((window.qsSdk || {}).ENV || {}).QS_CANVAS_APP_URL || 'http://qs-canvas-app.herokuapp.com',
   }
 
   @setup: (options) ->

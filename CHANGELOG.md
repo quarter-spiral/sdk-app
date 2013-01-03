@@ -1,3 +1,7 @@
+# 0.0.7 WIP
+
+* Makes the SDK work by default with local development setups
+
 # 0.0.6
 
 * Adds Newrelic monitoring and ping middleware
