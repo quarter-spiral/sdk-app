@@ -1,4 +1,4 @@
-# 0.0.8 WIP
+# 0.0.8
 
 * Makes SDK work when player is not logged in
 * Compress JS only in production
