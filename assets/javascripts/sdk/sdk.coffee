@@ -64,7 +64,15 @@ class QS
 
       switch data.type
         when 'qs-data'
-          event.source.postMessage(JSON.stringify(type: 'qs-info-received'), event.origin);
+          event.source.postMessage(JSON.stringify(type: 'qs-info-received'), event.origin)
+          # return when no QS token is present (a.k.a. not logged in user)
+          if !data.data.tokens or !data.data.tokens.qs
+            if flashMovie and flashMovie.qsSetupErrorCallback
+              flashMovie.qsSetupErrorCallback("Not logged in")
+            else
+              deferred.reject(new Error("Not logged in"))
+            return
+
           qs.data = data.data
           if flashMovie and flashMovie.qsSetupCallback
             window.qsFlashData = qs

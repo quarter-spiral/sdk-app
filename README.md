@@ -14,7 +14,7 @@ Include this ``script`` tag on every page you want to use the SDK from:
 
 Now initialize the SDK in your JavaScript:
 
-```javsacript
+```javascript
 QS.setup().then(function (qs) {
     …
 })
@@ -24,9 +24,20 @@ Inside of that function you now have access to the ``qs`` objects which comes wi
 
 **Make sure to call ``QS.setup`` only once on every page!**
 
+If a player is not logged in when playing the game (e.g. when playing through an embed on a third party website) the SDK will not setup! It will reject the promise. Handle that case like this:
+
+```javascript
+QS.setup().then(function (qs) {
+  // success!
+}, function(error) {
+  // Not setup. Log the reason:
+  console.log(error.message)
+})
+```
+
 ### Retrieve information about the player
 
-```javsacript
+```javascript
 QS.setup().then(function (qs) {
   qs.retrievePlayerInfo().then(function (player) {
     console.log("Current player:")
@@ -119,6 +130,15 @@ ExternalInterface.call('QS.setup')
 **Make sure to call ``QS.setup`` only once!**
 
 Once that callback was called you have access to the full QS functionality.
+
+If a player is not logged in when playing the game (e.g. when playing through an embed on a third party website) the SDK will not setup! It will instead call an error callback. You can register it like this:
+
+```actionscript
+function qsSetupErrorCallback(message):void {
+  // QS SDK not ready! Reason can be found in the message variable
+}
+ExternalInterface.addCallback('qsSetupErrorCallback', qsSetupErrorCallback);
+```
 
 ### Retrieve information about the player
 
