@@ -1,3 +1,7 @@
+# 0.0.8 WIP
+
+* Compress JS only in production
+
 # 0.0.7
 
 * Makes the SDK work by default with local development setups

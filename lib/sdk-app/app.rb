@@ -2,6 +2,17 @@ require 'sinatra'
 require 'sinatra/assetpack'
 require 'json'
 
+module Sinatra::AssetPack
+  class NoCompressionEngine < Engine
+    def js(str, options={})
+      str
+    end
+  end
+
+  Compressor.register :js, :none, NoCompressionEngine
+end
+
+
 module Sdk::App
   class App < Sinatra::Base
     set :root, File.expand_path('../../../assets', __FILE__)
@@ -10,7 +21,7 @@ module Sdk::App
     ENV_KEYS = ['QS_CANVAS_APP_URL']
 
     assets {
-      serve '/javascripts',     from: 'javascripts'        # Optional
+      serve '/javascripts',     from: 'javascripts'
 
       # The second parameter defines where the compressed version will be served.
       # (Note: that parameter is optional, AssetPack will figure it out.)
@@ -20,7 +31,7 @@ module Sdk::App
         '/javascripts/sdk/sdk.js'
       ]
 
-      js_compression  :yui      # Optional
+      js_compression(ENV['RACK_ENV'] == 'production' ? :yui : :none)
     }
 
     # Environment variables
