@@ -1,3 +1,8 @@
+# 0.0.9 WIP
+
+* Makes the SDK work with our Flash SDK
+* Fixes problems with DOM ready race conditions
+
 # 0.0.8
 
 * Makes SDK work when player is not logged in
