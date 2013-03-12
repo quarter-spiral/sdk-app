@@ -46,42 +46,44 @@ class QS
     qs.options = aug(@defaultOptions, options)
     deferred = Q.defer()
 
-    domready ->
-      flashMovie = document.getElementById('qs-embedded-flash-game')
+    setTimeout(->
+      domready ->
+        flashMovie = document.getElementById('qs-embedded-flash-game')
 
-      if window.qs
-        qs.data = window.qs
-        if flashMovie and flashMovie.qsSetupCallback
-          window.QS.flash = qs
-          flashMovie.qsSetupCallback(qs)
-          return
-        else
-          deferred.resolve(qs)
+        if window.qs
+          qs.data = window.qs
+          if flashMovie and flashMovie.qsSetupCallback
+            window.QS.flash = qs
+            flashMovie.qsSetupCallback(qs)
+            return
+          else
+            deferred.resolve(qs)
 
-      receiveMessage = (event) ->
-        return if event.origin isnt qs.options.canvasAppUrl
+        receiveMessage = (event) ->
+          return if event.origin isnt qs.options.canvasAppUrl
 
-        data = JSON.parse(event.data)
+          data = JSON.parse(event.data)
 
-        switch data.type
-          when 'qs-data'
-            event.source.postMessage(JSON.stringify(type: 'qs-info-received'), event.origin)
-            # return when no QS token is present (a.k.a. not logged in user)
-            if !data.data.tokens or !data.data.tokens.qs
-              if flashMovie and flashMovie.qsSetupErrorCallback
-                flashMovie.qsSetupErrorCallback("Not logged in")
+          switch data.type
+            when 'qs-data'
+              event.source.postMessage(JSON.stringify(type: 'qs-info-received'), event.origin)
+              # return when no QS token is present (a.k.a. not logged in user)
+              if !data.data.tokens or !data.data.tokens.qs
+                if flashMovie and flashMovie.qsSetupErrorCallback
+                  flashMovie.qsSetupErrorCallback("Not logged in")
+                else
+                  deferred.reject(new Error("Not logged in"))
+                return
+
+              qs.data = data.data
+              if flashMovie and flashMovie.qsSetupCallback
+                window.qsFlashData = qs
+                flashMovie.qsSetupCallback(qs)
               else
-                deferred.reject(new Error("Not logged in"))
-              return
+                deferred.resolve(qs)
 
-            qs.data = data.data
-            if flashMovie and flashMovie.qsSetupCallback
-              window.qsFlashData = qs
-              flashMovie.qsSetupCallback(qs)
-            else
-              deferred.resolve(qs)
-
-      window.addEventListener "message", receiveMessage, false
+        window.addEventListener "message", receiveMessage, false
+      , 100)
     deferred.promise
 
   retrievePlayerInfo: =>
