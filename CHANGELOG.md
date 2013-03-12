@@ -1,4 +1,4 @@
-# 0.0.9 WIP
+# 0.0.9
 
 * Makes the SDK work with our Flash SDK
 * Fixes problems with DOM ready race conditions
