@@ -1,4 +1,4 @@
-# 0.0.10 WIP
+# 0.0.10
 
 * Makes DOM SDK much less fragile
 
