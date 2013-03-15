@@ -32,13 +32,23 @@ extractData = (data) ->
     extractedData[key] = extractValue(value)
   extractedData
 
+flashMovie = null
+dataFromCanvas = null
+resolvedData = null
 
-flashMovie = null;
+resolveQsData = (handler) ->
+  newData = window.qs || dataFromCanvas
+  handler(newData) if !resolvedData and newData
+  resolvedData = newData
+  setTimeout((-> resolveQsData(handler)), 100) unless resolvedData
 
 class QS
   @defaultOptions: {
     canvasAppUrl: ((window.qsSdk || {}).ENV || {}).QS_CANVAS_APP_URL || 'http://qs-canvas-app.herokuapp.com',
   }
+
+  @log: (msg) ->
+    console.log("From Flash:", msg)
 
   @setup: (options) ->
     qs = new QS()
@@ -46,44 +56,25 @@ class QS
     qs.options = aug(@defaultOptions, options)
     deferred = Q.defer()
 
-    setTimeout(->
-      domready ->
-        flashMovie = document.getElementById('qs-embedded-flash-game')
+    flashMovie = document.getElementById('qs-embedded-flash-game')
 
-        if window.qs
-          qs.data = window.qs
-          if flashMovie and flashMovie.qsSetupCallback
-            window.QS.flash = qs
-            flashMovie.qsSetupCallback(qs)
-            return
-          else
-            deferred.resolve(qs)
+    resolveQsData (data) ->
+      # return when no QS token is present (a.k.a. not logged in user)
+      if !data.tokens or !data.tokens.qs
+        if flashMovie and flashMovie.qsSetupErrorCallback
+          flashMovie.qsSetupErrorCallback("Not logged in")
+        else
+          deferred.reject(new Error("Not logged in"))
+        return
 
-        receiveMessage = (event) ->
-          return if event.origin isnt qs.options.canvasAppUrl
+      qs.data = data
+      if flashMovie and flashMovie.qsSetupCallback
+        window.qsFlashData = qs
+        window.QS.flash = qs
+        flashMovie.qsSetupCallback(qs)
+      else
+        deferred.resolve(qs)
 
-          data = JSON.parse(event.data)
-
-          switch data.type
-            when 'qs-data'
-              event.source.postMessage(JSON.stringify(type: 'qs-info-received'), event.origin)
-              # return when no QS token is present (a.k.a. not logged in user)
-              if !data.data.tokens or !data.data.tokens.qs
-                if flashMovie and flashMovie.qsSetupErrorCallback
-                  flashMovie.qsSetupErrorCallback("Not logged in")
-                else
-                  deferred.reject(new Error("Not logged in"))
-                return
-
-              qs.data = data.data
-              if flashMovie and flashMovie.qsSetupCallback
-                window.qsFlashData = qs
-                flashMovie.qsSetupCallback(qs)
-              else
-                deferred.resolve(qs)
-
-        window.addEventListener "message", receiveMessage, false
-      , 100)
     deferred.promise
 
   retrievePlayerInfo: =>
@@ -174,3 +165,28 @@ class QS
     deferred.promise
 
 @QS = QS
+
+domready(->
+  canvasFrame = window.parent;
+
+  messageHandler = (event) ->
+    #return if event.origin isnt qs.options.canvasAppUrl
+
+    data = JSON.parse(event.data)
+    switch data.type
+      when 'qs-data'
+        if data.data
+          event.source.postMessage(JSON.stringify(type: 'qs-info-received'), event.origin)
+          dataFromCanvas = data.data
+
+
+
+  window.addEventListener "message", messageHandler, false
+
+  signalGameLoad = ->
+    unless dataFromCanvas
+      canvasFrame.postMessage(JSON.stringify(type: 'qs-game-loaded'), '*');
+      setTimeout(signalGameLoad, 300);
+
+  signalGameLoad()
+)

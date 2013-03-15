@@ -1,3 +1,7 @@
+# 0.0.10 WIP
+
+* Makes DOM SDK much less fragile
+
 # 0.0.9
 
 * Makes the SDK work with our Flash SDK
