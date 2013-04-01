@@ -147,6 +147,7 @@ class QS
         url: url
         type: 'json'
         method: 'put'
+        contentType: 'application/json'
         data: JSON.stringify(meta: data)
         headers: {
           Authorization: "Bearer #{@data.tokens.qs}"

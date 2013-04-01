@@ -1,3 +1,7 @@
+# 0.0.11 WIP
+
+* Adds content-type header to requests modifying player data
+
 # 0.0.10
 
 * Makes DOM SDK much less fragile
