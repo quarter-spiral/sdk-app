@@ -1,4 +1,4 @@
-# 0.0.12 / Unreleased
+# 0.0.12 / 2013-04-07
 
 * Does not break on non-JSON window.post messages anymore
 
