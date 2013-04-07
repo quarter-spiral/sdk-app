@@ -1,4 +1,4 @@
-# 0 .0.13 / Unreleased
+# 0 .0.13 / 2013-04-07
 
 * Fixes bug in the sdk JS
 
