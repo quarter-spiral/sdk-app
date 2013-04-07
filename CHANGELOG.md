@@ -1,3 +1,7 @@
+# 0.0.12 / Unreleased
+
+* Does not break on non-JSON window.post messages anymore
+
 # 0.0.11
 
 * Adds content-type header to requests modifying player data

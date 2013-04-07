@@ -172,8 +172,12 @@ domready(->
 
   messageHandler = (event) ->
     #return if event.origin isnt qs.options.canvasAppUrl
-
-    data = JSON.parse(event.data)
+    data = null
+    try {
+      data = JSON.parse(event.data)
+    } catch (e) {
+        return
+    }
     switch data.type
       when 'qs-data'
         if data.data
