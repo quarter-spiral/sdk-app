@@ -1,3 +1,7 @@
+# 0.0.14 / Unreleased
+
+* Adopts IFrame size on window resizing for fluidly sized HTML5 games
+
 # 0 .0.13 / 2013-04-07
 
 * Fixes bug in the sdk JS

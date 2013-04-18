@@ -184,8 +184,6 @@ domready(->
           event.source.postMessage(JSON.stringify(type: 'qs-info-received'), event.origin)
           dataFromCanvas = data.data
 
-
-
   window.addEventListener "message", messageHandler, false
 
   signalGameLoad = ->
@@ -194,4 +192,16 @@ domready(->
       setTimeout(signalGameLoad, 300);
 
   signalGameLoad()
+
+  gameResizeTimeout = null
+  signalGameSizeChange = (e) ->
+    body = document.getElementsByTagName('body')[0]
+    styles = window.getComputedStyle(body)
+    dimensions = {
+      width: parseInt(styles.width, 10)
+      height: parseInt(styles.height, 10)
+    }
+    canvasFrame.postMessage(JSON.stringify(type: 'qs-game-size-changed', dimensions: dimensions), '*');
+
+  window.addEventListener "resize", signalGameSizeChange
 )
