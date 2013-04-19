@@ -1,4 +1,4 @@
-# 0.0.16 / Unreleased
+# 0.0.16 / 2013-04-19
 
 * Ads continous size adopting
 
