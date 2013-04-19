@@ -1,3 +1,7 @@
+# 0.0.16 / Unreleased
+
+* Ads continous size adopting
+
 # 0.0.15 / 2013-04-19
 
 * Fixes and improves the size adopting mechanism

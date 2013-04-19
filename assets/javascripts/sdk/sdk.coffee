@@ -217,7 +217,6 @@ domready(->
 
   signalGameLoad()
 
-  gameResizeTimeout = null
   signalGameSizeChange = () ->
     document.body
     dimensions = {
@@ -228,4 +227,5 @@ domready(->
 
   window.addEventListener "resize", signalGameSizeChange
   signalGameSizeChange()
+  setInterval(signalGameSizeChange, 1000)
 )
