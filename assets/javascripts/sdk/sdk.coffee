@@ -173,25 +173,6 @@ domready(->
   maxHeight = (element) ->
     Math.max(element.scrollHeight, element.clientHeight, element.offsetHeight)
 
-  # wrap body in qs div (http://stackoverflow.com/questions/1577814/wrapping-a-div-around-the-document-body)
-  wrapBodyInQsDiv = ->
-    div = document.createElement("div")
-    div.id = "qs-body-wrap"
-    div.style.margin = "0px"
-    div.style.padding = "0px"
-    window.getComputedStyle(document.body)
-
-    # Move the body's children into this wrapper
-    div.appendChild document.body.firstChild  while document.body.firstChild
-    # Append the wrapper to the body
-    document.body.appendChild div
-    div
-  bodyDiv = wrapBodyInQsDiv()
-  bodyMargin = {
-    width: maxWidth(document.body) - maxWidth(bodyDiv)
-    height: maxHeight(document.body) - maxHeight(bodyDiv)
-  }
-
   canvasFrame = window.parent
 
   messageHandler = (event) ->
@@ -220,8 +201,8 @@ domready(->
   signalGameSizeChange = () ->
     document.body
     dimensions = {
-      width: maxWidth(bodyDiv) + bodyMargin.width
-      height: maxHeight(bodyDiv) + bodyMargin.height
+      width: maxWidth(document.body)
+      height: maxHeight(document.body)
     }
     canvasFrame.postMessage(JSON.stringify(type: 'qs-game-size-changed', dimensions: dimensions), '*');
 
