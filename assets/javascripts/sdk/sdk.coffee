@@ -168,7 +168,31 @@ class QS
 @QS = QS
 
 domready(->
-  canvasFrame = window.parent;
+  maxWidth = (element) ->
+    Math.max(element.scrollWidth, element.clientWidth, element.offsetWidth)
+  maxHeight = (element) ->
+    Math.max(element.scrollHeight, element.clientHeight, element.offsetHeight)
+
+  # wrap body in qs div (http://stackoverflow.com/questions/1577814/wrapping-a-div-around-the-document-body)
+  wrapBodyInQsDiv = ->
+    div = document.createElement("div")
+    div.id = "qs-body-wrap"
+    div.style.margin = "0px"
+    div.style.padding = "0px"
+    window.getComputedStyle(document.body)
+
+    # Move the body's children into this wrapper
+    div.appendChild document.body.firstChild  while document.body.firstChild
+    # Append the wrapper to the body
+    document.body.appendChild div
+    div
+  bodyDiv = wrapBodyInQsDiv()
+  bodyMargin = {
+    width: maxWidth(document.body) - maxWidth(bodyDiv)
+    height: maxHeight(document.body) - maxHeight(bodyDiv)
+  }
+
+  canvasFrame = window.parent
 
   messageHandler = (event) ->
     #return if event.origin isnt qs.options.canvasAppUrl
@@ -194,14 +218,14 @@ domready(->
   signalGameLoad()
 
   gameResizeTimeout = null
-  signalGameSizeChange = (e) ->
-    body = document.getElementsByTagName('body')[0]
-    styles = window.getComputedStyle(body)
+  signalGameSizeChange = () ->
+    document.body
     dimensions = {
-      width: parseInt(styles.width, 10)
-      height: parseInt(styles.height, 10)
+      width: maxWidth(bodyDiv) + bodyMargin.width
+      height: maxHeight(bodyDiv) + bodyMargin.height
     }
     canvasFrame.postMessage(JSON.stringify(type: 'qs-game-size-changed', dimensions: dimensions), '*');
 
   window.addEventListener "resize", signalGameSizeChange
+  signalGameSizeChange()
 )
