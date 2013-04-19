@@ -1,4 +1,4 @@
-# 0.0.15 / Unreleased
+# 0.0.15 / 2013-04-19
 
 * Fixes and improves the size adopting mechanism
 
