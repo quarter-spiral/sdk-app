@@ -168,12 +168,7 @@ class QS
 @QS = QS
 
 domready(->
-  maxWidth = (element) ->
-    Math.max(element.scrollWidth, element.clientWidth, element.offsetWidth)
-  maxHeight = (element) ->
-    Math.max(element.scrollHeight, element.clientHeight, element.offsetHeight)
-
-  canvasFrame = window.parent
+  canvasFrame = window.parent;
 
   messageHandler = (event) ->
     #return if event.origin isnt qs.options.canvasAppUrl
@@ -189,6 +184,8 @@ domready(->
           event.source.postMessage(JSON.stringify(type: 'qs-info-received'), event.origin)
           dataFromCanvas = data.data
 
+
+
   window.addEventListener "message", messageHandler, false
 
   signalGameLoad = ->
@@ -197,16 +194,4 @@ domready(->
       setTimeout(signalGameLoad, 300);
 
   signalGameLoad()
-
-  signalGameSizeChange = () ->
-    document.body
-    dimensions = {
-      width: maxWidth(document.body)
-      height: maxHeight(document.body)
-    }
-    canvasFrame.postMessage(JSON.stringify(type: 'qs-game-size-changed', dimensions: dimensions), '*');
-
-  window.addEventListener "resize", signalGameSizeChange
-  signalGameSizeChange()
-  setInterval(signalGameSizeChange, 1000)
 )
