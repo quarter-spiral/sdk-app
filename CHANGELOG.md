@@ -1,4 +1,4 @@
-# 0.0.17 / Unreleased
+# 0.0.17 / 2013-05-04
 
 * Reverts facebook resizing mechanics
 
