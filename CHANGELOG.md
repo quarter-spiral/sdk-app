@@ -1,5 +1,6 @@
 # 0.0.18 / Unreleased
 
+* Adds EventShim for IE8 support
 * Migrates to .ruby-version
 
 # 0.0.17 / 2013-05-04
