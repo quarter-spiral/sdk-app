@@ -1,3 +1,7 @@
+# 0.0.18 / Unreleased
+
+* Migrates to .ruby-version
+
 # 0.0.17 / 2013-05-04
 
 * Reverts facebook resizing mechanics
