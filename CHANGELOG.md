@@ -1,4 +1,4 @@
-# 0.0.19 / Unreleased
+# 0.0.19 / 2013-07-12
 
 * Adds thin as a dependencie to run in parallel on metaserver
 
