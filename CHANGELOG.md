@@ -1,3 +1,7 @@
+# 0.0.19 / Unreleased
+
+* Adds thin as a dependencie to run in parallel on metaserver
+
 # 0.0.18 / 2013-05-27
 
 * Adds EventShim for IE8 support
