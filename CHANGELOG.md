@@ -1,4 +1,4 @@
-# 0.0.20 / Unreleased
+# 0.0.20 / 2013-07-17
 
 * Adds qs data to the error thrown when not logged in
 

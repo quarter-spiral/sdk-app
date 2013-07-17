@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sdk-app (0.0.19)
+    sdk-app (0.0.20)
       coffee-script (~> 2.2.0)
       json (~> 1.7.5)
       newrelic_rpm (~> 3.5.4.33)
