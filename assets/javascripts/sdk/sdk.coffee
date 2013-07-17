@@ -64,7 +64,9 @@ class QS
         if flashMovie and flashMovie.qsSetupErrorCallback
           flashMovie.qsSetupErrorCallback("Not logged in")
         else
-          deferred.reject(new Error("Not logged in"))
+          error = new Error("Not logged in")
+          error.data =  data
+          deferred.reject(error)
         return
 
       qs.data = data

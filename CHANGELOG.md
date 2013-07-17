@@ -1,3 +1,7 @@
+# 0.0.20 / Unreleased
+
+* Adds qs data to the error thrown when not logged in
+
 # 0.0.19 / 2013-07-12
 
 * Adds thin as a dependencie to run in parallel on metaserver
