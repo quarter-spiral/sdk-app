@@ -1,4 +1,4 @@
-# 0.0.21 / Unreleased
+# 0.0.21 / 2013-07-23
 
 * Adds a way to retrieve arbitary player information
 
