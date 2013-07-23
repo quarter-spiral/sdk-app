@@ -89,6 +89,21 @@ QS.setup().then(function (qs) {
 })
 ```
 
+### Retrieve data for any QS player
+
+You can retrieve information about players with the QS SDK. All you need is a set of one or more UUIDs of one or more players.
+
+**Important:** ``retrievePlayerInfo`` returns a single object with the player information of the currently logged in player when no parameter is passed to it. If you do pass an array or a single UUID to it, though the return value is going to be an object which holds they players' information under the key of their UUID.
+
+```javascript
+QS.setup().then(function (qs) {
+  var uuids = [uuid1, uuid2]
+  qs.retrievePlayerInfo(uuids).then(function (data) {
+    console.log('' + uuid1 + ' has the name: ' + data.uuid1.name);
+  });
+})
+```
+
 ## Flash
 
 **The Flash SDK is in in a raw state at the moment. Please pay additional caution when using it!**
@@ -222,7 +237,7 @@ function qsPlayerDataCallback(data):void {
   trace("Player data loaded!")
 }
 ExternalInterface.addCallback('qsPlayerDataCallback', qsPlayerDataCallback);
- 
+
 function qsPlayerDataErrorCallback(message):void {
   trace("Problem loading player data: " + message)
 }

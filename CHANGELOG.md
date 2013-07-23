@@ -1,3 +1,7 @@
+# 0.0.21 / Unreleased
+
+* Adds a way to retrieve arbitary player information
+
 # 0.0.20 / 2013-07-17
 
 * Adds qs data to the error thrown when not logged in

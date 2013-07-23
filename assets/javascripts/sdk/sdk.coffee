@@ -79,7 +79,7 @@ class QS
 
     deferred.promise
 
-  retrievePlayerInfo: =>
+  retrieveLoggedInPlayerInfo: =>
     deferred = Q.defer()
     reqwest(
         url: "#{@data.ENV.QS_AUTH_BACKEND_URL}/api/v1/me"
@@ -100,6 +100,39 @@ class QS
         deferred.reject(err)
 
     )
+    deferred.promise
+
+  retrievePlayerInfo: (uuids) =>
+    return @retrieveLoggedInPlayerInfo() unless uuids
+
+    clearTimeout(@retrievePlayerInfoTimeout) if @retrievePlayerInfoTimeout
+
+    @retrievePlayerInfoUuids ||= []
+    @retrievePlayerInfoDeferred ||= Q.defer()
+
+    uuids = [uuids] if (typeof uuids) is 'string'
+    @retrievePlayerInfoUuids.push(uuid) for uuid in uuids when @retrievePlayerInfoUuids.indexOf(uuid) < 0
+    deferred = @retrievePlayerInfoDeferred
+
+    @retrievePlayerInfoTimeout = setTimeout(=>
+      uuids = if @retrievePlayerInfoUuids.length > 0 then "uuids[]=#{@retrievePlayerInfoUuids.join('&uuids[]=')}" else ''
+      @retrievePlayerInfoUuids = []
+      @retrievePlayerInfoDeferred = null
+      reqwest(
+          url: "#{@data.ENV.QS_PLAYERCENTER_BACKEND_URL}/v1/public/players?#{uuids}"
+          type: 'json'
+          method: 'get'
+      ).then((playerInfo) ->
+        deferred.resolve(playerInfo)
+
+      , (err, msg) ->
+        if flashMovie && flashMovie.qsPlayerDataErrorCallback
+          flashMovie.qsPlayerDataErrorCallback(msg)
+        else
+          deferred.reject(err)
+      )
+    , 500)
+
     deferred.promise
 
   retrievePlayerData: =>
