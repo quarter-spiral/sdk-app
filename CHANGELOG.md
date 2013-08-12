@@ -1,5 +1,6 @@
 # 0.0.22 / Unreleased
 
+* Adds getsentry.com exception tracking
 * Adds request id tracker
 
 # 0.0.21 / 2013-07-23

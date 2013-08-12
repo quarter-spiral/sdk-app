@@ -27,4 +27,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'json', '~> 1.7.5'
   gem.add_dependency 'thin'
   gem.add_dependency 'qs-request-tracker', '>= 0.0.2'
+  gem.add_dependency 'sentry-raven'
 end

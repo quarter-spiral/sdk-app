@@ -7,6 +7,7 @@ PATH
       newrelic_rpm (~> 3.5.4.33)
       ping-middleware (~> 0.0.2)
       qs-request-tracker (>= 0.0.2)
+      sentry-raven
       sinatra (~> 1.3.3)
       sinatra-assetpack (~> 0.0.11)
       therubyracer (~> 0.10.0)
@@ -28,12 +29,16 @@ GEM
     eventmachine (1.0.3)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    faraday (0.8.4)
+      multipart-post (~> 1.1)
+    hashie (2.0.5)
     jsmin (1.0.1)
     json (1.7.7)
     libv8 (3.3.10.4)
     macaddr (1.6.1)
       systemu (~> 2.5.0)
     multi_json (1.7.9)
+    multipart-post (1.2.0)
     newrelic_rpm (3.5.4.34)
     open4 (1.3.0)
     ping-middleware (0.0.2)
@@ -44,6 +49,10 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
+    sentry-raven (0.6.0)
+      faraday (>= 0.7.6)
+      hashie (>= 1.1.0)
+      uuidtools
     sinatra (1.3.6)
       rack (~> 1.4)
       rack-protection (~> 1.3)
@@ -63,6 +72,7 @@ GEM
     tilt (1.4.1)
     uuid (2.3.7)
       macaddr (~> 1.0)
+    uuidtools (2.1.4)
     yui-compressor (0.9.6)
       POpen4 (>= 0.1.4)
 
