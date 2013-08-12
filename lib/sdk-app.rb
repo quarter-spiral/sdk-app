@@ -7,3 +7,6 @@ module Sdk
 end
 
 require "sdk-app/app"
+
+require 'qs/request/tracker'
+require 'qs/request/tracker/service_client_extension'

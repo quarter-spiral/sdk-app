@@ -18,4 +18,6 @@ end
 use NewRelicMiddleware
 use Ping::Middleware
 
+use Qs::Request::Tracker::Middleware
+
 run Sdk::App::App.new

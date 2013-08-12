@@ -1,3 +1,7 @@
+# 0.0.22 / Unreleased
+
+* Adds request id tracker
+
 # 0.0.21 / 2013-07-23
 
 * Adds a way to retrieve arbitary player information
